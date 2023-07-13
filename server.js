@@ -39,7 +39,7 @@ app.use('/fetch',fetchapp)
 
 // **************************************************************************************   */
 // Job Scheduling
-schedule.scheduleJob('0 /2 * * *', async function(){
+schedule.scheduleJob('*/2 * * * *', async function(){
     // const batchObj =app.get('batchObj') 
     console.log("Hrllo")
     const currentDate = new Date();
