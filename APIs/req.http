@@ -1,0 +1,42 @@
+POST http://localhost:3015/create/batch
+Content-Type: application/json
+
+{
+    "name":"vnr-p1",
+    "profiles":{
+        "leetcode":true,
+        "codechef":true,
+        "codeforce":true,
+        "spoj":true,
+        "hackerrank":true
+    },
+    "users":[]
+}
+
+
+###
+POST http://localhost:3015/create/addUsers
+Content-Type: application/json
+
+{
+    "name":"vnr-p1",
+    "users":[
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"nithin",
+        "rollno":"20071a1258",
+        "branch":"IT",
+        "mobileno":"8688340024",
+        "email":"vomaan@gmail.com"
+    }
+    ]
+}    
+    
+
+###
+GET http://localhost:3015/create/get
+            
