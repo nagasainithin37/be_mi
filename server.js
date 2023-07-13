@@ -39,8 +39,9 @@ app.use('/fetch',fetchapp)
 
 // **************************************************************************************   */
 // Job Scheduling
-schedule.scheduleJob('0 1 * * *', async function(){
+schedule.scheduleJob('0 /2 * * *', async function(){
     // const batchObj =app.get('batchObj') 
+    console.log("Hrllo")
     const currentDate = new Date();
    const dateOnly = currentDate.toISOString().split('T')[0];
     var users=await userCollection.aggregate(
