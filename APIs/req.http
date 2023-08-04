@@ -2,10 +2,10 @@ POST http://localhost:3015/create/batch
 Content-Type: application/json
 
 {
-    "name":"vnr-p1",
+    "name":"vnr-p2",
     "profiles":{
         "leetcode":true,
-        "codechef":true,
+        "codechef":false,
         "codeforce":true,
         "spoj":true,
         "hackerrank":true
@@ -22,16 +22,40 @@ Content-Type: application/json
     "name":"vnr-p1",
     "users":[
     {
-        "lc":"vomann",
-        "cc":"vomann",
-        "hr":"tvomann2121",
-        "cf":"tvomann2121",
-        "spoj":"tvomann2121",
+        "lc":"spandana_jilla97",
+        "cc":"spandana_999",
+        "hr":"spandana_jilla97",
+        "cf":"spandana_jilla",
+        "spoj":"spandana_99",
+        "name":"spandana",
+        "rollno":"20071a6921",
+        "branch":"IOT",
+        "mobileno":"9876543210",
+        "email":"spandana@gmail.com"
+    },
+    {
+        "lc":"nagasainithin37",
+        "cc":"nagasai_nithin",
+        "hr":"nagasainithin37",
+        "cf":"nagasainithin37",
+        "spoj":"nagasainithin",
         "name":"nithin",
-        "rollno":"20071a1258",
+        "rollno":"20071a1288",
         "branch":"IT",
-        "mobileno":"8688340024",
-        "email":"vomaan@gmail.com"
+        "mobileno":"12345678",
+        "email":"nithin@gmail.com"
+    },
+    {
+        "lc":"nagasithin37",
+        "cc":"nagasathin",
+        "hr":"nagasaiin37",
+        "cf":"nagasaihin37",
+        "spoj":"nagathin",
+        "name":"Temporary",
+        "rollno":"20071a0000",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"temp@gmail.com"
     }
     ]
 }    
@@ -40,3 +64,138 @@ Content-Type: application/json
 ###
 GET http://localhost:3015/create/get
             
+###
+PUT http://localhost:3015/update/profiles
+Content-Type: application/json
+
+{
+    "username":"20071a1288",
+    "profiles":{
+        "hr":"nagasai",
+        "cf":"nagasai"
+    }
+}
+
+###
+PUT http://localhost:3015/update/user
+Content-Type: application/json
+
+{
+    "username":"20071a1288",
+    "user":{
+        "mobileno":"7396813838"
+    }
+}
+
+###
+POST http://localhost:3015/auth/login
+Content-Type: application/json
+
+{
+    "username":"20071a1288",
+    "password":"20071a1288"
+}
+
+
+
+###
+GET http://localhost:3015/get/batchScore?name=vnr-p1
+
+###
+GET http://localhost:3015/get/batch
+
+###
+POST http://localhost:3015/create/addUsers
+Content-Type: application/json
+
+{
+    "name":"vnr-p2",
+    "users":[
+    
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1258",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1256",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1254",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1238",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann221",
+        "name":"vomann",
+        "rollno":"21071a1228",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+    {
+        "lc":"vomann",
+        "cc":"vomann",
+        "hr":"tvomnn2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1218",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    },
+  {
+        "lc":"voman",
+        "cc":"vomann",
+        "hr":"tvomann2121",
+        "cf":"tvomann2121",
+        "spoj":"tvomann2121",
+        "name":"vomann",
+        "rollno":"21071a1252",
+        "branch":"IT",
+        "mobileno":"12345678",
+        "email":"vomann@gmail.com"
+    }
+    ]
+}    
+    

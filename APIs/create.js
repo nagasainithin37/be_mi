@@ -4,6 +4,8 @@ createApp.use(exp.json())
 const expressAsyncHandler=require('express-async-handler')
 const bcryptjs=require('bcryptjs')
 const axios=require('axios')
+
+
 // creating a new batch
 createApp.post('/batch',expressAsyncHandler(async(req,res)=>{
     var body=req.body;
@@ -46,9 +48,17 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             {
             profileObj.lc=user.lc
             lc=await axios.get('http://localhost:'+process.env.PORT+'/fetch/lc/'+user.lc)
+            if(lc.data.payload==null){
+                scoreObj.lc={
+                        "rating":0, 
+                        "noOfProblemsSolved":0,
+                        "noOfContests":0
+                }
+            }
+            else{
             scoreObj.lc=lc.data.payload
             }
-            
+        }
 
             //codechef
             if(user.cc.length!=0)
@@ -108,6 +118,7 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             authObj.email=user.email
             authObj.userId=userDetails.insertedId
             authObj.batch=[body.name]
+            authObj.type='user'
             authObj=await authCollection.insertOne(authObj)
             createdusers.push(user.rollno)
             await activeBatchCollection.updateOne({name:body.name},{$push:{users:authObj.insertedId}})
