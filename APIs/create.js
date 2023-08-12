@@ -14,9 +14,10 @@ createApp.post('/batch',expressAsyncHandler(async(req,res)=>{
     if(result==null)
         {
         await activeBatchCollection.insertOne(body)
-        res.send({message:`${body.name} batch is created`})
+        res.send({message:`${body.name} batch is created`,type:'success'})
         }
-    res.send({message:`${body.name} batch already exists`})
+    
+    res.send({message:`${body.name} batch already exists`,'type':'failure'})
 }))
 
 

@@ -199,3 +199,6 @@ Content-Type: application/json
     ]
 }    
     
+
+### 
+GET http://localhost:3015/get/batch-info?name=vnr-p1

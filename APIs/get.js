@@ -139,7 +139,39 @@ getApp.post('/batch',expressAsyncHandler(async(req,res)=>{
 
 
 
+getApp.get('/batch-info',expressAsyncHandler(async(req,res)=>{
 
+
+    var batchName=req.query.name
+    var activeBatchCollection=req.app.get('activeBatchCollection')
+    var authCollection=req.app.get('authCollection')
+    var userCollection=req.app.get('userCollection')
+    const batchObj=await activeBatchCollection.findOne({name:batchName})
+    var users=await authCollection.aggregate(
+        [
+            {$match:{_id:{$in:batchObj.users}}},
+            {$project:{email:1,userId:1,_id:0,batch:1,username:1}}
+        ]
+    ).toArray()
+    var userProfileIds=[]
+    for(var i=0;i<users.length;i++)
+    userProfileIds.push(users[i].userId)
+
+    var userProfiles=await userCollection.aggregate(
+        [
+           {$match:{_id:{$in:userProfileIds}}},
+           {$project:{name:1,rollno:1,branch:1,mobileno:1,_id:0}}
+        ]
+    ).toArray()
+    var batchUserDetails=[]
+    for(var i=0;i<users.length;i++){
+        var Obj={...users[i],...userProfiles[i]}
+        batchUserDetails.push(Obj)
+    }
+    res.send({batchUserDetails})
+    // res.send({batchObj,batchName,users,userProfiles})
+
+}))
 
 
 
