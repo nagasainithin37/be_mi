@@ -202,3 +202,20 @@ Content-Type: application/json
 
 ### 
 GET http://localhost:3015/get/batch-info?name=vnr-p1
+
+
+###
+PUT http://localhost:3015/update/addToGroup
+Content-Type: application/json
+
+{
+    "name":"vnr-p3",
+    "users":[
+        "20071a1202",
+        "20071a1288"
+    ]
+}
+
+
+###
+GET http://localhost:3015/update/deleteBatch?name=vnr-p2
