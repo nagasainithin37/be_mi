@@ -14,7 +14,8 @@ createApp.post('/batch',expressAsyncHandler(async(req,res)=>{
     if(result==null)
         {
         await activeBatchCollection.insertOne(body)
-        res.send({message:`${body.name} batch is created`,type:'success'})
+         res.send({message:`${body.name} batch is created`,type:'success'})
+         return
         }
     
     res.send({message:`${body.name} batch already exists`,'type':'failure'})
@@ -114,12 +115,21 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             userDetails=await userCollection.insertOne(userDetails)
 
             var authObj={}
+            if(typeof user.username=='number'){
+                    user.username=user.rollno.toString()
+            }
             authObj.username=user.rollno;
+            if(typeof user.rollno=='number'){
+                    user.rollno=user.rollno.toString()
+            }
+            
             authObj.password=await bcryptjs.hash(user.rollno,5)
+            console.log(authObj.password)
             authObj.email=user.email
             authObj.userId=userDetails.insertedId
             authObj.batch=[body.name]
             authObj.type='user'
+            // console.log(authObj) 
             authObj=await authCollection.insertOne(authObj)
             createdusers.push(user.rollno)
             await activeBatchCollection.updateOne({name:body.name},{$push:{users:authObj.insertedId}})

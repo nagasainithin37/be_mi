@@ -19,7 +19,7 @@ POST http://localhost:3015/create/addUsers
 Content-Type: application/json
 
 {
-    "name":"vnr-p1",
+    "name":"vnr-p2",
     "users":[
     {
         "lc":"spandana_jilla97",
