@@ -13,6 +13,22 @@ Content-Type: application/json
     "users":[]
 }
 
+###
+PUT http://localhost:3015/update/batchDetails
+Content-Type: application/json
+
+{
+    "oldName":"vnr-p2",
+    "newName":"vnr-p1",
+    "profiles":{
+        "leetcode":false,
+        "codechef":false,
+        "codeforce":true,
+        "spoj":true,
+        "hackerrank":true
+    },
+    "users":[]
+}
 
 ###
 POST http://localhost:3015/create/addUsers
@@ -40,7 +56,7 @@ Content-Type: application/json
         "cf":"nagasainithin37",
         "spoj":"nagasainithin",
         "name":"nithin",
-        "rollno":"20071a1288",
+        "rollno":"srikar",
         "branch":"IT",
         "mobileno":"12345678",
         "email":"nithin@gmail.com"
@@ -219,3 +235,69 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3015/update/deleteBatch?name=vnr-p2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

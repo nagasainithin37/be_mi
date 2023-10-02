@@ -120,6 +120,10 @@ for(var i=0;i<userId.length;i++)
 resObj.sort((a,b)=>{
     return -(a.totalScore-b.totalScore)
 })
+for(var i=0;i<resObj.length;i++){
+    resObj[i]['rank']=i+1
+}
+console.log(resObj)
 res.send({resObj,profiles:users.profiles})
 
 
@@ -150,7 +154,7 @@ getApp.get('/batch-info',expressAsyncHandler(async(req,res)=>{
     var users=await authCollection.aggregate(
         [
             {$match:{_id:{$in:batchObj.users}}},
-            {$project:{email:1,userId:1,_id:0,batch:1,username:1}}
+            {$project:{email:1,userId:1,_id:1,batch:1,username:1}}
         ]
     ).toArray()
     var userProfileIds=[]
@@ -168,6 +172,7 @@ getApp.get('/batch-info',expressAsyncHandler(async(req,res)=>{
         var Obj={...users[i],...userProfiles[i]}
         batchUserDetails.push(Obj)
     }
+    
     res.send({batchUserDetails})
     // res.send({batchObj,batchName,users,userProfiles})
 

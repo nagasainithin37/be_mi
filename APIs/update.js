@@ -10,6 +10,10 @@ updateApp.put('/addToGroup',expressAsyncHandler(async(req,res)=>{
     const authCollection=req.app.get('authCollection')
     const activeBatchCollection=req.app.get('activeBatchCollection')
     const batchdetails=await activeBatchCollection.findOne({name:req.body.name})
+    for(var i=0;i<req.body.users.length;i++){
+        x=req.body.users[i]
+        req.body.users[i]=x.toString();
+    }
     const userIds=await authCollection.aggregate(
         [
             {
@@ -112,7 +116,39 @@ updateApp.put('/user',expressAsyncHandler(async(req,res)=>{
 
 // }))
 
-
+updateApp.put('/batchDetails',expressAsyncHandler(async(req,res)=>{
+    const activeBatchCollection=req.app.get('activeBatchCollection')
+    const obj=req.body
+    const isPresent=await activeBatchCollection.find({name:obj.name}).toArray()
+    // console.log(isPresent)
+    // console.log(isPresent.length==0)
+    // console.log(isPresent.length==1 && isPresent[0]._id==obj._id)
+    // console.log(isPresent[0]._id)
+    // console.log(obj._id)
+    // console.log((isPresent.length==0)||(isPresent.length==1 && isPresent[0]._id==obj.name))
+    if((isPresent.length==0)||(isPresent.length==1 && isPresent[0]._id==obj._id))
+    {
+        // console.log("inside")
+        var newObj={}
+        newObj.name=obj.name
+        newObj.profiles=obj.profiles
+        const result=await activeBatchCollection.updateOne({_id:new ObjectId(obj._id)},{$set:newObj})
+        console.log(result)
+        return res.send({message:"success"})
+    }
+    else{
+        return res.send({message:"Another batch is present with same name"})
+    }
+    // if (isPresent==null){
+    //     var newObj={}
+    //     newObj.name=obj.newName
+    //     newObj.profiles=obj.profiles
+    //     const result=await activeBatchCollection.updateOne({name:obj.oldName},{$set:newObj})
+    //     return res.send({message:"success"})
+    // }else{
+    //     return res.send({message:"Another batch is present with same name"})
+    // }
+}))
 
 updateApp.get('/deleteBatch',expressAsyncHandler(async(req,res)=>{
 

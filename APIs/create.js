@@ -37,7 +37,9 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
     const dateOnly = currentDate.toISOString().split('T')[0];
     for(var user of body.users)
     {
-
+         if(typeof user.rollno=='number'){
+                    user.rollno=user.rollno.toString()
+            }
         var result=await authCollection.findOne({username:user.rollno})       
         if(result==null)
         {
@@ -115,13 +117,11 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             userDetails=await userCollection.insertOne(userDetails)
 
             var authObj={}
-            if(typeof user.username=='number'){
-                    user.username=user.rollno.toString()
-            }
+           
             authObj.username=user.rollno;
-            if(typeof user.rollno=='number'){
-                    user.rollno=user.rollno.toString()
-            }
+            // if(typeof user.rollno=='number'){
+            //         user.rollno=user.rollno.toString()
+            // }
             
             authObj.password=await bcryptjs.hash(user.rollno,5)
             console.log(authObj.password)

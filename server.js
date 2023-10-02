@@ -13,6 +13,7 @@ const fetchapp=require('./APIs/fetch')
 const updateApp=require('./APIs/update')
 const getApp=require('./APIs/get')
 const authApp=require('./APIs/auth')
+const expressAsyncHandler = require('express-async-handler')
 
 
 var DbObj,activeBatchCollection,profileCollection,userCollection,authCollection,scoreCollection;
@@ -79,81 +80,85 @@ app.use('/auth',authApp)
 
 // **************************************************************************************   */
 // Job Scheduling
-// schedule.scheduleJob('*/2 * * * *', async function(){
-//     // const batchObj =app.get('batchObj') 
-//     const currentDate = new Date();
-//    const dateOnly = currentDate.toISOString().split('T')[0];
-//    console.log(dateOnly)
-//     var users=await userCollection.aggregate(
-//         [
-//             {
-//             $lookup: {
-//                 from: 'profiles',
-//                 localField: 'profileId',
-//                 foreignField: '_id',
-//                 as: 'profiles'
-//             }
-//             },
-//             { $project: { profiles: 1 } }
-//         ],
-//         { maxTimeMS: 60000, allowDiskUse: true }
-//     ).toArray();
+schedule.scheduleJob('0 0 * * *', async function(){
+    // const batchObj =app.get('batchObj') 
+    const currentDate = new Date();
+   const dateOnly = currentDate.toISOString().split('T')[0];
+   console.log(dateOnly)
+    var users=await userCollection.aggregate(
+        [
+            {
+            $lookup: {
+                from: 'profiles',
+                localField: 'profileId',
+                foreignField: '_id',
+                as: 'profiles'
+            }
+            },
+            { $project: { profiles: 1 } }
+        ],
+        { maxTimeMS: 60000, allowDiskUse: true }
+    ).toArray();
 
-//     for(var profile of users){
-//         var user=profile.profiles[0]
-//          var scoreObj={}
-//             //leetcode
-//             if(user.lc.length!=0)
-//             {
-//             lc=await axios.get('http://localhost:'+process.env.PORT+'/fetch/lc/'+user.lc)
-//             scoreObj.lc=lc.data.payload
-//             }
+    for(var profile of users){
+        var user=profile.profiles[0]
+         var scoreObj={}
+            //leetcode
+            if(user.lc.length!=0)
+            {
+            lc=await axios.get('http://localhost:'+process.env.PORT+'/fetch/lc/'+user.lc)
+            scoreObj.lc=lc.data.payload
+            }
             
 
-//             //codechef
-//             if(user.cc.length!=0)
-//             {
+            //codechef
+            if(user.cc.length!=0)
+            {
         
-//             cc=await axios.get('http://localhost:'+process.env.PORT+'/fetch/cc/'+user.cc)
-//             scoreObj.cc=cc.data.payload
-//             }
+            cc=await axios.get('http://localhost:'+process.env.PORT+'/fetch/cc/'+user.cc)
+            scoreObj.cc=cc.data.payload
+            }
 
 
-//             //codeforce
-//             if(user.cf.length!=0)
-//             {
-//             cf=await axios.get('http://localhost:'+process.env.PORT+'/fetch/cf/'+user.cf)
-//             scoreObj.cf=cf.data.payload
-//             }
+            //codeforce
+            if(user.cf.length!=0)
+            {
+            cf=await axios.get('http://localhost:'+process.env.PORT+'/fetch/cf/'+user.cf)
+            scoreObj.cf=cf.data.payload
+            }
 
 
-//             //spoj
-//             if(user.spoj.length!=0)
-//             {
+            //spoj
+            if(user.spoj.length!=0)
+            {
  
-//             spoj=await axios.get('http://localhost:'+process.env.PORT+'/fetch/spoj/'+user.spoj)
-//             scoreObj.spoj=spoj.data.payload
-//             }
+            spoj=await axios.get('http://localhost:'+process.env.PORT+'/fetch/spoj/'+user.spoj)
+            scoreObj.spoj=spoj.data.payload
+            }
 
 
 
-//             //hackerrank
-//             if(user.hr.length!=0)
-//             {
-//             hr=await axios.get('http://localhost:'+process.env.PORT+'/fetch/hr/'+user.hr)    
-//             scoreObj.hr=hr.data.payload
-//             }
+            //hackerrank
+            if(user.hr.length!=0)
+            {
+            hr=await axios.get('http://localhost:'+process.env.PORT+'/fetch/hr/'+user.hr)    
+            scoreObj.hr=hr.data.payload
+            }
 
-//             scoreObj=await scoreCollection.insertOne(scoreObj)
-//             var temp={}
-//             temp.date=dateOnly
-//             temp._id=scoreObj.insertedId
-//             await userCollection.updateOne({_id:profile._id},{$push:{scoreId:temp}})
-//     }
+            scoreObj=await scoreCollection.insertOne(scoreObj)
+            var temp={}
+            temp.date=dateOnly
+            temp._id=scoreObj.insertedId
+            await userCollection.updateOne({_id:profile._id},{$push:{scoreId:temp}})
+    }
 
-// });
+});
 
 
+app.use('/dummy',expressAsyncHandler(async(req,res)=>{
+    console.log("requested")
+    res.send({message:"success"})
+}))
 
 
 
