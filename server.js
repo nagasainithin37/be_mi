@@ -43,7 +43,7 @@ console.log(e)
 const middleware1=async(req,res,next)=>{
     console.log(req.body)
     var token=req.headers['authorization']
-    var decoded=jwt.verify(token, process.env.SECRETKEY)
+    var decoded=jwt.verify(token, process.env.secretkey)
     const authCollection=req.app.get('authCollection')
     const userCollection=req.app.get('userCollection')
     const profileCollection=req.app.get('profileCollection')
