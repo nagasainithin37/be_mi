@@ -160,6 +160,10 @@ updateApp.get('/deleteBatch',expressAsyncHandler(async(req,res)=>{
     const scoreCollection=req.app.get('scoreCollection')
     const profileCollection=req.app.get('profileCollection')
     const batchDetails=await activeBatchCollection.findOne({name:batch_name})
+
+    console.log(batchDetails)
+    // await authCollection.updateMany({_id:{$in:batchDetails.users }},{$pull:{batch:batch_name}})
+    
     for(var i=0;i<batchDetails.users.length;i++){
 
         const userAuth=await authCollection.findOne({_id:new ObjectId(batchDetails.users[i])})
@@ -184,6 +188,9 @@ updateApp.get('/deleteBatch',expressAsyncHandler(async(req,res)=>{
             await authCollection.deleteOne({_id:new ObjectId(userAuth._id)})
         }
     }
+
+    
+
     await activeBatchCollection.deleteOne({name:batch_name})
     console.log('bye')
     res.send({"message":"success"})

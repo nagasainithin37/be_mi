@@ -45,7 +45,7 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
         {
             var profileObj={}
             var scoreObj={}
-            var lc,cc,cf,spoj,hr;
+            var lc,cc,cf,spoj,hr,ib;
             
             //leetcode
             if(user.lc.length!=0)
@@ -90,7 +90,16 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             scoreObj.spoj=spoj.data.payload
             }
 
-
+            // interview bit
+             if(user.ib.length!=0)
+            {
+            profileObj.ib=user.ib
+            ib=await axios.get('http://localhost:'+process.env.PORT+'/fetch/ib/'+user.ib)
+            if(ib.data.message=='users data is ')
+            scoreObj.ib=ib.data.payload
+            else
+            scoreObj.ib={"noOfProblemsSolved":0}
+            }
 
             //hackerrank
             if(user.hr.length!=0)
@@ -99,6 +108,13 @@ createApp.post('/addUsers',expressAsyncHandler(async(req,res)=>{
             hr=await axios.get('http://localhost:'+process.env.PORT+'/fetch/hr/'+user.hr)    
             scoreObj.hr=hr.data.payload
             }
+
+
+
+
+
+
+
 
             var profileObj=await profileCollection.insertOne(profileObj)
             var scoreObj=await scoreCollection.insertOne(scoreObj)

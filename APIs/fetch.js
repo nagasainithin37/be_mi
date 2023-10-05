@@ -222,7 +222,27 @@ fetchapp.get('/hr/:username',expressAsyncHandler(async(req,res)=>{
 
 // ********************************************************************************************************************************************************************
 
+fetchapp.get('/ib/:username',expressAsyncHandler(async(req,res)=>{
+    var resObj={}
+    console.log(req.params)
+    var URL="https://www.interviewbit.com/profile/"+req.params.username
+    console.log(URL)
+    var result
+    try{
 
+         result=await axios.get(URL)
+    }
+    catch(err){
+        return res.send({message:err})
+    }
+    const $=cheerio.load(result.data)
+    const noOfProblemsSolved=$('body > div.container.user-profile > div.col-xs-12.col-md-4 > div.user-stats > div:nth-child(2) > div.txt')
+    resObj['noOfProblemsSolved']=parseInt($(noOfProblemsSolved[0]).text())??0
+   if(Number.isNaN(resObj['noOfProblemsSolved']))
+   resObj['noOfProblemsSolved']=0
+//Send Response
+    res.send({'message':"users data is ","payload":resObj})
+}))
 
 
 module.exports= fetchapp;

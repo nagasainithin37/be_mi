@@ -33,6 +33,9 @@ var getTotal=(obj,type)=>{
         else if(type=='spoj'){
             return obj.noOfProblemsSolved*10
         }
+        else if(type=='ib'){
+            return parseInt(obj.noOfProblemsSolved/3);
+        }
 }
 
 
@@ -112,6 +115,11 @@ for(var i=0;i<userId.length;i++)
         scoreObj.hr=scores[i].hr
         scoreObj.hr.total=getTotal(scores[i].hr,'hackerrank')
          totalScore+=scoreObj.hr.total
+    }
+    if(users.profiles.ib){
+        scoreObj.ib=scores[i].ib
+        scoreObj.ib.total=getTotal(scores[i].ib,'ib')
+         totalScore+=scoreObj.ib.total
     }
     temp.totalScore=totalScore
     temp.score=scoreObj
