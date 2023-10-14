@@ -264,17 +264,17 @@ POST http://localhost:3015/create/addUsers
 Content-Type: application/json
 
 {
-    "name":"nithin",
+    "name":"vnr-p1",
     "users":[
     {
-        "lc":"nagasainithin37",
-        "cc":"nagasai_nithin",
-        "hr":"nagasainithin37",
-        "cf":"nagasainithin37",
-        "spoj":"nagasainithin",
-        "ib":"naga-sai-nithin",
+        "lc":"nagashin37",
+        "cc":"nagasthin",
+        "hr":"nagasin37",
+        "cf":"nagasin37",
+        "spoj":"nagthin",
+        "ib":"naga-in",
         "name":"2788",
-        "rollno":"2788",
+        "rollno":"1012",
         "branch":"IT",
         "mobileno":"12345678",
         "email":"nithin@gmail.com"
@@ -287,12 +287,27 @@ Content-Type: application/json
 
 
 
+###
+PUT http://localhost:3015/auth/changePassword
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "oldPassword":"20071a0000",
+    "newPassword":"admin"
+}
 
 
 
 
 
+###
+PUT http://localhost:3015/auth/changePswByAdmin
+Content-Type: application/json
 
+{
+    "username":"1bhj234"
+}
 
 
 

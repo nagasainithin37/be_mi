@@ -1,13 +1,10 @@
 const exp=require('express')
 const app=exp()
 const cors=require('cors')
-app.use(cors())
 const axios=require('axios')
-require('dotenv').config()
 const schedule = require('node-schedule');
 const jwt=require('jsonwebtoken')
 const mClient=require('mongodb').MongoClient
-app.use(exp.json())
 const createApp=require('./APIs/create')
 const fetchapp=require('./APIs/fetch')
 const updateApp=require('./APIs/update')
@@ -16,7 +13,15 @@ const authApp=require('./APIs/auth')
 const expressAsyncHandler = require('express-async-handler')
 
 
-var DbObj,activeBatchCollection,profileCollection,userCollection,authCollection,scoreCollection;
+
+require('dotenv').config()
+app.use(cors())
+app.use(exp.json())
+
+
+
+
+let DbObj,activeBatchCollection,profileCollection,userCollection,authCollection,scoreCollection;
 mClient.connect(process.env.URL)
 .then((client)=>{
     console.log("Connection successful")
@@ -56,19 +61,11 @@ const middleware1=async(req,res,next)=>{
 
 
 res.send({auth:data,user:data2,profile:data3,score:data4})
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
 app.use('/user/getdetails',middleware1)
 app.use("/create",createApp)
 app.use('/fetch',fetchapp)
@@ -155,6 +152,8 @@ schedule.scheduleJob('0 0 * * *', async function(){
 });
 
 
+
+// dummy route to activate server
 app.use('/dummy',expressAsyncHandler(async(req,res)=>{
     console.log("requested")
     res.send({message:"success"})
@@ -179,5 +178,9 @@ app.use((err,req,res,next)=>{
     res.send({message:`${err}`,reason:`${err.message}`})
     return
 })
+
+
+
+
 
 app.listen(process.env.PORT,()=>{console.log("Server is listining in port",process.env.PORT)})
